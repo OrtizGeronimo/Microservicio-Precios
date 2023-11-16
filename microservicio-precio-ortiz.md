@@ -143,7 +143,7 @@ Body
 ----
 
 **Consultar precio con beneficio aplicado** <br>
-`POST /v1/price/{articleId}`
+`GET /v1/price/{articleId}`
 
 
 *Response* <br>
