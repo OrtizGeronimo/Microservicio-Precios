@@ -170,6 +170,7 @@ Notifica cambio de precios para reportes estadísticos en direct a servicio **st
 {
 	"articleId": {"id"},
 	"precio": {"precio"},
+    "fechaActualización": {"fecha"}
 }
 ```
 
