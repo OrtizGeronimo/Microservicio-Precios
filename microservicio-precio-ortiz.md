@@ -50,18 +50,19 @@ El beneficio representa una oferta ya sea un cupón o un descuento, una disminuc
 ### Interfaz REST
 
 **Cambiar el precio de un artículo o varios** <br>
-`POST /v1/price/update/{articleId}`
+`POST /v1/price/update/`
 
 Body
 
 ```json
 {
+ "idArticulos": int[],
  "monto": Float,
 }
 ```
 
 *Response* <br>
-`200 OK` si existe el artículo | `404 NOT FOUND` si no existe //pongo response?
+`200 OK` si existen los artículos | `404 NOT FOUND` si no existe 
 
 
 -----
@@ -160,7 +161,7 @@ Body
 
 ### Interfaz asincronica (rabbit)
 
-**Validación de stock de un artículo**
+**Notificación de actualización de precio**
 
 Notifica cambio de precios para reportes estadísticos en direct a servicio **stats**
 
