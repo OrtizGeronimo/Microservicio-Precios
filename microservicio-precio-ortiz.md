@@ -14,8 +14,8 @@ Este servicio se comunicará con el carrito y la orden, cada vez que uno de ello
 Se modifica el precio de un producto o varios, permitiendo si se desea modificar a futuro
 #### Crear beneficio 
 Crea un beneficio 
-####  Agregar cupón
-Habilitar el beneficio para un artículo o muchos
+####  Asociar beneficio
+Asociar el beneficio para un artículo
 ####  Consultar Precio actual
 ####  Consultar histórico de precios
 ####  Consultar precio con beneficio
@@ -23,27 +23,27 @@ Habilitar el beneficio para un artículo o muchos
 
 ### Modelo
 
-Precio
+Price (Precio)
 ```json
 {
  "id": Integer,
- "idArticulo": String,
- "precio": Float,
- "fechaFinVigencia": Date,
- "idBeneficios": []int,
+ "articleId": String,
+ "price": Float,
+ "effectiveDate": Date, //fechaFinVigencia
+ "dealIds": []int,
 }
 ```
-Beneficio <br>
+Deal (Beneficio) <br>
 
 El beneficio representa una oferta ya sea un cupón o un descuento, una disminución del valor del artículo, puede ser de tipo Porcentaje o Valor, tomando el monto lo que se deberá descontar de manera absoluta o el porcentaje. 
 ```json
 {
  "id": Integer,
- "monto": Float,
- "codigo": String,
- "fechaInicio": Date,
- "fechaFin": Date,
- "tipo": Enum{"Porcentaje", "Valor"}
+ "amount": Float,
+ "code": String,
+ "startDate": Date,
+ "endDate": Date,
+ "type": Enum{"Porcentaje", "Valor"}
 }
 ```
 
@@ -56,8 +56,8 @@ Body
 
 ```json
 {
- "idArticulos": int[],
- "monto": Float,
+ "articleId": Integer,
+ "amount": Float,
 }
 ```
 
@@ -74,11 +74,11 @@ Body
 
 ```json
 {
- "fechaInicio": Date,
- "fechaFin": Date,
- "monto": Float,
- "cupon": Boolean,
- "tipo": Enum{"Porcentaje", "Valor"}
+ "startDate": Date,
+ "endDate": Date,
+ "amount": Float,
+ "code": string,
+ "type": Enum{"Porcentaje", "Valor"}
 }
 ```
 
@@ -114,7 +114,7 @@ Body
 ```json
 {
  "articleId": {"articleId"},
- "precio": {"precio"}
+ "amount": {"precio"}
 }
 ```
 
@@ -131,9 +131,9 @@ Body
 ```json
 {
     "articleId": {"articleId"},
-    "precios": [
-        "precio": {"precio"},
-        "fechaFinVigencia": {"fechaFinVigencia"}
+    "prices": [
+        "price": {"precio"},
+        "effectiveDate": {"effectiveDate"}
     ]
 }
 ```
@@ -143,16 +143,25 @@ Body
 ----
 
 **Consultar precio con beneficio aplicado** <br>
-`GET /v1/price/{articleId}`
+`POST /v1/price/`
 
+Body
+
+```json
+{
+ "articleId": Integer,
+ "dealId": Integer
+}
+```
 
 *Response* <br>
 `200 OK` si existe el artículo 
 ```json
 {
     "articleId": {"articleId"},
-    "precio": {"precio"},
-    "precioFinal": {"precioConOferta"}
+    "dealId": {"dealId"},
+    "price": {"price"},
+    "finalPrice": {"finalPrice"}
 }
 ```
 
@@ -163,15 +172,31 @@ Body
 
 **Notificación de actualización de precio**
 
-Notifica cambio de precios para reportes estadísticos en direct a servicio **stats**
+Notifica cambio de precios para reportes estadísticos en direct a canal **price-update** 
 
 **Body**
 
 ```json
 {
 	"articleId": {"id"},
-	"precio": {"precio"},
-    "fechaActualización": {"fecha"}
+	"price": {"precio"},
+    "updateDate": {"fecha"}
 }
 ```
+
+**Validación de artículos**
+
+Valida artículo direct a través de  **article-exist** 
+
+**Body**
+
+```json
+{
+    "type": "article-exist",
+    "message": {
+        "articleId": "{articleId}"
+    }
+}
+```
+
 
