@@ -114,7 +114,7 @@ Body
 ```json
 {
  "articleId": {"articleId"},
- "amount": {"precio"}
+ "amount": {"amount"}
 }
 ```
 
@@ -132,7 +132,7 @@ Body
 {
     "articleId": {"articleId"},
     "prices": [
-        "price": {"precio"},
+        "price": {"price"},
         "effectiveDate": {"effectiveDate"}
     ]
 }
