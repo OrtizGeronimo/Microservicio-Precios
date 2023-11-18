@@ -179,8 +179,8 @@ Notifica cambio de precios para reportes estadísticos en direct a canal **price
 ```json
 {
 	"articleId": {"id"},
-	"price": {"precio"},
-    "updateDate": {"fecha"}
+	"price": {"price"},
+    "updateDate": {"updateDate"}
 }
 ```
 
