@@ -178,24 +178,47 @@ Notifica cambio de precios para reportes estadísticos en direct a canal **price
 
 ```json
 {
-	"articleId": {"id"},
-	"price": {"price"},
-    "updateDate": {"updateDate"}
+    "type": "price-update",
+    "exchange": "prices",
+    "queue": "prices-update",
+    "message": {
+        "articleId": {"id"},
+        "price": {"price"},
+        "updateDate": {"updateDate"}
+    }
 }
 ```
 
 **Validación de artículos**
 
+GET
+
 Valida artículo direct a través de  **article-exist** 
 
-**Body**
 
 ```json
 {
     "type": "article-exist",
     "message": {
-        "articleId": "{articleId}"
+        "articleId": "{articleId}",
+        "valid": true|false
     }
+}
+```
+
+POST
+
+ Se envía mensaje a catalog para comprobar que existe un artículo
+
+```json
+{
+   "type": "article-exist",
+   "queue": "price-article-exist",
+   "exchange": "prices",
+    "message": {
+        "referenceId": "{cartId}",
+        "articleId": "{articleId}"
+   }
 }
 ```
 
